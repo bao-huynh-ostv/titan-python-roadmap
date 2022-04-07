@@ -149,3 +149,11 @@ id of name_1 afer initialing with new value =  140192230341520
 ```
 As can be seen in the above example, when a string reference is reinitialized with a new value, it is creating a new object rather than overwriting the previous value.  
 In Python, strings are made immutable so that programmers cannot alter the contents of the object (even by mistake). This avoids unnecessary bugs.
+
+String methods return a new string object that is modified as directed by the method. They leave the original target string unchanged:
+```python
+>>> s = 'foobar'
+>>> t = s.upper()
+>>> print(s, t)
+foobar FOOBAR
+```

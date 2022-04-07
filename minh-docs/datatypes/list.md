@@ -71,9 +71,9 @@ a = [1, 2, 3, 1, 2, 3]
 ## List Elements Can Be Accessed By Index
 
 A negative list index counts from the end of the list:
-!(https://github.com/bao-huynh-ostv/titan-python-roadmap/tree/minh/images/index.jpg)
+!(https://github.com/bao-huynh-ostv/titan-python-roadmap/blob/minh/minh-docs/images/index.jpg)
 
-Slicing also works. If a is a list, the expression a[m:n] returns the portion of a from index m to, but not including, index n:
+Slicing also works. If a is a list, the expression `a[m:n]` returns the portion of a from index m to, but not including, index n:
 ```python
 >>> a = ['foo', 'bar', 'baz', 'qux', 'quux', 'corge']
 
@@ -174,3 +174,251 @@ All the usual syntax regarding indices and slicing applies to sublists as well:
 ---
 
 ## Lists Are Mutable
+
+Once a list has been created, elements can be added, deleted, shifted, and moved around at will. Python provides a wide range of ways to modify lists.
+
+### Modifying a Single List Value
+
+A single value in a list can be replaced by indexing and simple assignment:
+```python
+>>> a = [1, 2, 3, 4]
+>>> a[1] = 5
+>>> a
+[1, 5, 3, 4]
+```
+
+A list item can be deleted with the del command:
+```python
+>>> a = [1, 2, 3, 4]
+>>> del a[1]
+>>> a
+[1, 3, 4]
+```
+
+### Modifying Multiple List Values
+
+To change several contiguous elements in a list at one time:
+```python
+a[m:n] = <iterable>
+```
+
+```python
+>>> a = ['foo', 'bar', 'baz', 'qux', 'quux', 'corge']
+
+>>> a[1:4]
+['bar', 'baz', 'qux']
+>>> a[1:4] = [1.1, 2.2, 3.3, 4.4, 5.5]
+>>> a
+['foo', 1.1, 2.2, 3.3, 4.4, 5.5, 'quux', 'corge']
+```
+
+The number of elements inserted need not be equal to the number replaced. Python just grows or shrinks the list as needed.  
+You can insert multiple elements in place of a single element—just use a slice that denotes only one element:
+```python
+>>> a = [1, 2, 3]
+>>> a[1:2] = [2.1, 2.2, 2.3]     # using slicing
+>>> a
+[1, 2.1, 2.2, 2.3, 3]
+```
+
+Note that this is not the same as replacing the single element with a list:
+```python
+>>> a = [1, 2, 3]
+>>> a[1] = [2.1, 2.2, 2.3]      # not using slicing
+>>> a
+[1, [2.1, 2.2, 2.3], 3]
+```
+
+You can also insert elements into a list without removing anything. Simply specify a slice of the form `[n:n]` (a zero-length slice) at the desired index:
+```python
+>>> a = [1, 2, 7, 8]
+>>> a[2:2] = [3, 4, 5, 6]      # insert before the index [2:2]
+>>> a
+[1, 2, 3, 4, 5, 6, 7, 8]
+```
+
+You can delete multiple elements out of the middle of a list by assigning the appropriate slice to an empty list. You can also use the del statement with the same slice:
+```python
+>>> a = ['foo', 'bar', 'baz', 'qux', 'quux', 'corge']
+>>> a[1:5] = []
+>>> a
+['foo', 'corge']
+
+>>> a = ['foo', 'bar', 'baz', 'qux', 'quux', 'corge']
+>>> del a[1:5]
+>>> a
+['foo', 'corge']
+```
+
+### Preparing or Appending Items to a List
+
+Additional items can be added to the start or end of a list using the + concatenation operator or the += augmented assignment operator:
+```python
+>>> a = ['foo', 'bar', 'baz', 'qux', 'quux', 'corge']
+
+>>> a += ['grault', 'garply']
+>>> a
+['foo', 'bar', 'baz', 'qux', 'quux', 'corge', 'grault', 'garply']
+
+>>> a = ['foo', 'bar', 'baz', 'qux', 'quux', 'corge']
+
+>>> a = [10, 20] + a
+>>> a
+[10, 20, 'foo', 'bar', 'baz', 'qux', 'quux', 'corge']
+```
+
+Note that a list must be concatenated with an object that is iterable, so if you want to add only one element, you need to specify it as a singleton list:
+```python
+>>> a = ['foo', 'bar', 'baz', 'qux', 'quux', 'corge']
+>>> a += 20
+Traceback (most recent call last):
+  File "<pyshell#58>", line 1, in <module>
+    a += 20
+TypeError: 'int' object is not iterable
+
+>>> a += [20]
+>>> a
+['foo', 'bar', 'baz', 'qux', 'quux', 'corge', 20]
+```
+
+Strings are iterable also. But watch what happens when you concatenate a string onto a list:
+```python
+>>> a = ['foo', 'bar', 'baz', 'qux', 'quux']
+>>> a += 'corge'
+>>> a
+['foo', 'bar', 'baz', 'qux', 'quux', 'c', 'o', 'r', 'g', 'e']
+```
+
+If you really want to add just the single string 'corge' to the end of the list, you need to specify it as a singleton list:
+```python
+>>> a = ['foo', 'bar', 'baz', 'qux', 'quux']
+>>> a += ['corge']
+>>> a
+['foo', 'bar', 'baz', 'qux', 'quux', 'corge']
+```
+
+### Methods That Modify a List
+
+Because lists are mutable, the list methods shown here modify the target list in place.
+
+#### ***a.append(\<obj>)***
+
+> Appends an object to a list.
+
+Remember, list methods modify the target list in place. They do not return a new list:
+```python
+>>> a = [1,2,3,4]
+>>> id(a)
+140286936967296
+>>> a.append(5)
+>>> id(a)
+140286936967296
+```
+
+Remember that when the + operator is used to concatenate to a list, if the target operand is an iterable, then its elements are broken out and appended to the list individually:
+```python
+>>> a = ['a', 'b']
+>>> a + [1, 2, 3]
+['a', 'b', 1, 2, 3]
+```
+
+The .append() method does not work that way! If an iterable is appended to a list with .append(), it is added as a single object:
+```python
+>>> a = ['a', 'b']
+>>> a.append([1, 2, 3])
+>>> a
+['a', 'b', [1, 2, 3]]
+```
+
+Thus, with .append(), you can append a string as a single entity:
+```python
+>>> a = ['a', 'b']
+>>> a.append('foo')
+>>> a
+['a', 'b', 'foo']
+```
+
+#### ***a.append(\<obj>)***
+
+> Extends a list with the objects from an iterable.
+
+The `.extend()` also adds to the end of a list, but the argument is expected to be an iterable. The items in \<iterable> are added individually:
+```python
+>>> a = ['a', 'b']
+>>> a.extend([1, 2, 3])
+>>> a
+['a', 'b', 1, 2, 3]
+```
+
+In other words, `.extend()` behaves like the + operator. More precisely, since it modifies the list in place, it behaves like the += operator:
+```python
+>>> a = ['a', 'b']
+>>> a += [1, 2, 3]
+>>> a
+['a', 'b', 1, 2, 3]
+```
+
+#### ***a.insert(\<index>, \<obj>)***
+
+> Inserts an object into a list.
+
+`a.insert(<index>, <obj>)` inserts object \<obj> into list a at the specified \<index>. Following the method call, `a[<index>]` is \<obj>, and the remaining list elements are pushed to the right:
+```python
+>>> a = ['foo', 'bar', 'baz', 'qux', 'quux', 'corge']
+>>> a.insert(3, 3.14159)
+>>> a[3]
+3.14159
+>>> a
+['foo', 'bar', 'baz', 3.14159, 'qux', 'quux', 'corge']
+```
+
+#### ***a.remove(\<obj>)***
+
+> Removes an object from a list.
+
+a.remove(<obj>) removes object <obj> from list a. If <obj> isn’t in a, an exception is raised:
+```python
+>>> a = ['foo', 'bar', 'baz', 'qux', 'quux', 'corge']
+>>> a.remove('baz')
+>>> a
+['foo', 'bar', 'qux', 'quux', 'corge']
+
+>>> a.remove('Bark!')
+Traceback (most recent call last):
+  File "<pyshell#13>", line 1, in <module>
+    a.remove('Bark!')
+ValueError: list.remove(x): x not in list
+```
+
+#### ***a.pop(index=-1)***
+
+> Removes an element from a list.
+
+This method differs from .remove() in two ways:
+
+1. You specify the index of the item to remove, rather than the object itself.
+2. The method returns a value: the item that was removed.
+
+`a.pop()` simply removes the last item in the list:
+```python
+>>> a = ['foo', 'bar', 'baz', 'qux', 'quux', 'corge']
+
+>>> a.pop()
+'corge'
+>>> a
+['foo', 'bar', 'baz', 'qux', 'quux']
+```
+
+---
+
+## Lists Are Dynamic
+
+When items are added to a list, it grows as needed.  
+Similarly, a list shrinks to accommodate the removal of items:
+```python
+>>> a = ['foo', 'bar', 'baz', 'qux', 'quux', 'corge']
+>>> a[2:3] = []
+>>> del a[0]
+>>> a
+['bar', 'qux', 'quux', 'corge']
+```
