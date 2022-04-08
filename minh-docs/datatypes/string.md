@@ -1,6 +1,9 @@
 # STRINGS
+
 Strings in python are surrounded by either single quotation marks or double quotation marks. Ex: `'hello' or "hello"`
+
 ## Assign String to a Variable
+
 ```python
 a = "Hello"
 print(a)
