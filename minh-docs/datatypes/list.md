@@ -71,7 +71,8 @@ a = [1, 2, 3, 1, 2, 3]
 ## List Elements Can Be Accessed By Index
 
 A negative list index counts from the end of the list:
-!(https://github.com/bao-huynh-ostv/titan-python-roadmap/blob/minh/minh-docs/images/index.jpg)
+
+![List indexing](images/index.jpg)
 
 Slicing also works. If a is a list, the expression `a[m:n]` returns the portion of a from index m to, but not including, index n:
 ```python
