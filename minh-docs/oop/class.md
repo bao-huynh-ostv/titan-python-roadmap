@@ -42,13 +42,15 @@ Use class attributes to define properties that should have the same value for ev
 
 ## Class and Instance Attributes
 
+> *All variables which are assigned a value in the class declaration are class/static variables. And variables that are assigned values inside methods are instance/non-static variables.*
+
 Now create a new Dog class with a class attribute called `.species` and two instance attributes called `.name` and `.age`:
 ```python
 >>> class Dog:
-...     species = "Canis familiaris"
+...     species = "Canis familiaris"    # class/static variable
 ...     def __init__(self, name, age):
-...         self.name = name
-...         self.age = age
+...         self.name = name            # instance/non-static variable
+...         self.age = age              # instance/non-static variable
 ```
 
 To instantiate objects of this Dog class, you need to provide values for the `name` and `age`. If you don’t, then Python raises a `TypeError`:
@@ -145,7 +147,7 @@ Now, when you print(miles), you get a much friendlier output:
 
 Inheritance is the process by which one class takes on the attributes and methods of another. Newly formed classes are called **child classes**, and the classes that child classes are derived from are called **parent classes**.
 
-You may have inherited your hair color from your mother. It’s an attribute you were born with. Let’s say you decide to color your hair purple. Assuming your mother doesn’t have purple hair, you’ve just **overridden** the hair color attribute that you inherited from your mom.
+You may have inherited your hair color from your mother. It’s an attribute you were born with. Let’s say you decide to color your hair purple. Assuming your mother doesn’t have purple hair, you’ve just **overridden (Polymorphism)** the hair color attribute that you inherited from your mom.
 
 You also inherit, in a sense, your language from your parents. If your parents speak English, then you’ll also speak English. Now imagine you decide to learn a second language, like German. In this case you’ve **extended** your attributes because you’ve added an attribute that your **parents don’t have**.
 
