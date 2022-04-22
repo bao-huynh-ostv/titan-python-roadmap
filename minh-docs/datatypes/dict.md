@@ -390,3 +390,12 @@ Or the values to merge can be specified as a list of keyword arguments:
 >>> d1
 {'a': 10, 'b': 200, 'c': 30, 'd': 400}
 ```
+
+---
+
+## DICT COMPREHENSION
+
+```python
+old_dict = {'a': 1, 'b': 2, 'c': 3}
+
+new_dict = {key:value for (key, value)} in old_dict.items()}
